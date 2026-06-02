@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PantryPick - Interactive UI Design System & Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Color Tokens */
+            --color-primary-50: #f0fdf4;
+            --color-primary-100: #dcfce7;
+            --color-primary-500: #16a34a;
+            --color-primary-600: #15803d;
+            --color-primary-900: #14532d;
+            
+            --color-secondary-50: #f8fafc;
+            --color-secondary-200: #e2e8f0;
+            --color-secondary-500: #64748b;
+            --color-secondary-900: #0f172a;
+            
+            --color-danger-500: #ef4444;
+            --color-warning-500: #f59e0b;
+            --color-success-500: #22c55e;
+
+            /* Fonts */
+            --font-primary: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: #f8fafc;
+            color: var(--color-secondary-900);
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+        }
+
+        /* Custom Scrollbar for clean mock UI */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50">
+
+    <!-- Design System Header -->
+    <header class="border-b border-slate-200 bg-white py-6 px-8 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-green-700 bg-green-50 px-2.5 py-1 rounded">UI Design Handoff</span>
+                <h1 class="text-2xl font-bold tracking-tight text-slate-900 mt-2">PantryPick Mobile Interface Specs</h1>
+                <p class="text-sm text-slate-500 mt-1">Interactive high-fidelity prototype & receipt-to-inventory validation flow.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="text-xs text-slate-500">Design Tokens:</span>
+                <span class="inline-block w-4 h-4 rounded-full bg-green-600" title="Primary Green"></span>
+                <span class="inline-block w-4 h-4 rounded-full bg-slate-700" title="Neutral Dark"></span>
+                <span class="inline-block w-4 h-4 rounded-full bg-orange-500" title="Decay Indicator"></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 md:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Left Side: Interactive Prototype (Phone Sandbox) -->
+            <div class="lg:col-span-5 flex flex-col items-center">
+                <div class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Live Interactive Prototype</div>
+                
+                <!-- Phone Wrapper -->
+                <div class="relative w-full max-w-[390px] h-[780px] bg-slate-950 rounded-[48px] p-3 shadow-2xl border-4 border-slate-800 ring-1 ring-slate-700/50 flex flex-col overflow-hidden">
+                    <!-- Notch / Dynamic Island -->
+                    <div class="absolute top-4 left-1/2 transform -translate-x-1/2 w-28 h-5 bg-black rounded-full z-30 flex items-center justify-between px-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-neutral-800"></div>
+                        <div class="w-8 h-1 bg-neutral-900 rounded"></div>
+                    </div>
+
+                    <!-- Internal Mobile Screen -->
+                    <div class="w-full h-full bg-white rounded-[38px] overflow-hidden flex flex-col relative pt-8 pb-4">
+                        
+                        <!-- Mini App Bar -->
+                        <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between bg-white">
+                            <div class="flex items-center gap-1.5">
+                                <span class="font-bold text-lg text-green-700 tracking-tight">PantryPick</span>
+                            </div>
+                            <div class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Premium Plan</div>
+                        </div>
+
+                        <!-- Main Phone Content Container -->
+                        <div class="flex-1 overflow-y-auto px-5 py-4 custom-scroll" id="screen-container">
+                            
+                            <!-- SCREEN 1: UPLOAD RECEIPT (DEFAULT) -->
+                            <div id="screen-upload" class="space-y-5">
+                                <div class="text-center pt-2">
+                                    <h2 class="text-xl font-bold text-slate-800">Sync Grocery Receipt</h2>
+                                    <p class="text-xs text-slate-500 mt-1">Upload Walmart, Kroger, or Instacart receipt. No manual entry required.</p>
+                                </div>
+
+                                <!-- Receipt Visual Concept Card -->
+                                <div class="bg-slate-50 rounded-2xl p-4 border border-dashed border-slate-200">
+                                    <img src="images/a-clean-mobile-application-interface-moc.png" alt="PantryPick Receipt Concept" class="w-full h-32 object-cover rounded-lg mb-3 shadow-sm" />
+                                    <div class="text-center text-[11px] text-slate-400">Automatic OCR & decay speed mapping engine active.</div>
+                                </div>
+
+                                <!-- Simulated Upload Box / CTA -->
+                                <div class="border-2 border-dashed border-green-300 bg-green-50/50 hover:bg-green-50 rounded-2xl p-6 text-center cursor-pointer transition duration-200" onclick="startSimulatedParsing()">
+                                    <div class="mx-auto w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-green-600">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                                        </svg>
+                                    </div>
+                                    <span class="block text-sm font-semibold text-slate-800">Upload Receipt PDF or Photo</span>
+                                    <span class="block text-[11px] text-slate-500 mt-1">Supports screenshots & order confirmation emails</span>
+                                    
+                                    <div class="mt-4 inline-block bg-green-600 hover:bg-green-700 text-white font-medium text-xs px-4 py-2 rounded-lg shadow-sm">
+                                        Select Walmart Receipt
+                                    </div>
+                                </div>
+
+                                <!-- Helpful Tip -->
+                                <div class="bg-blue-50/60 rounded-xl p-3 border border-blue-100 flex gap-2.5">
+                                    <div class="text-blue-600 mt-0.5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 111.063.852l-.708 2.836a.75.75 0 001.063.852l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-blue-900">Weekly Value Shield</h4>
+                                        <p class="text-[10px] text-blue-700 leading-relaxed mt-0.5">Suburban parents save an average of $2,913/year by uploading online grocery receipts immediately on Sunday.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SCREEN 2: PARSING STATE (HIDDEN BY DEFAULT) -->
+                            <div id="screen-parsing" class="hidden space-y-6 py-6">
+                                <div class="text-center space-y-2">
+                                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-green-500 border-t-transparent"></div>
+                                    <h3 class="text-lg font-bold text-slate-800 mt-3">Parsing Receipt Data</h3>
+                                    <p class="text-xs text-slate-500">Automated e-receipt extraction in progress...</p>
+                                </div>
+
+                                <!-- Progress Logs -->
+                                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3 font-mono text-xs">
+                                    <div id="log-step-1" class="flex items-center gap-2 text-slate-400 transition-colors">
+                                        <span class="status-indicator">●</span>
+                                        <span>Ingesting Walmart Digital PDF...</span>
+                                    </div>
+                                    <div id="log-step-2" class="flex items-center gap-2 text-slate-400 transition-colors">
+                                        <span class="status-indicator">●</span>
+                                        <span>Extracting line items & quantities...</span>
+                                    </div>
+                                    <div id="log-step-3" class="flex items-center gap-2 text-slate-400 transition-colors">
+                                        <span class="status-indicator">●</span>
+                                        <span>Mapping shelf-life decay parameters...</span>
+                                    </div>
+                                </div>
+
+                                <!-- Live Saving Projection Badge -->
+                                <div class="bg-green-50 rounded-xl p-3 border border-green-100 text-center">
+                                    <span class="text-[10px] font-semibold tracking-wider uppercase text-green-700 block">Est. Recovery Potential</span>
+                                    <span class="text-xl font-bold text-green-800 mt-1 block">$42.50 this week</span>
+                                </div>
+                            </div>
+
+                            <!-- SCREEN 3: VERIFICATION CHECKLIST (HIDDEN BY DEFAULT) -->
+                            <div id="screen-verify" class="hidden space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-sm font-bold text-slate-800">Verify Fresh Items</h3>
+                                        <p class="text-[10px] text-slate-500">Adjust any values before adding to fridge</p>
+                                    </div>
+                                    <span class="text-xs font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded">6 Items Found</span>
+                                </div>
+
+                                <!-- Interactive Items Checklist -->
+                                <div class="space-y-2.5 max-h-[360px] overflow-y-auto pr-1 custom-scroll" id="verification-list">
+                                    <!-- Populated programmatically in JS -->
+                                </div>
+
+                                <!-- Verified CTA -->
+                                <div class="pt-4 border-t border-slate-100">
+                                    <button onclick="confirmAndFinish()" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-xl text-xs transition duration-200 shadow-sm flex items-center justify-center gap-2">
+                                        <span>Save to Virtual Fridge</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- SCREEN 4: SUCCESS & ZERO-SEARCH RESULTS (HIDDEN) -->
+                            <div id="screen-success" class="hidden text-center space-y-5 py-6">
+                                <div class="mx-auto w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                                    </svg>
+                                </div>
+
+                                <div class="space-y-1">
+                                    <h3 class="text-lg font-bold text-slate-800">Pantry Synchronized!</h3>
+                                    <p class="text-xs text-slate-500">Inventory updated. Est. $42.50 saved.</p>
+                                </div>
+
+                                <!-- Dynamic Recipes Match Card -->
+                                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 text-left space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[10px] font-bold text-green-700 bg-green-100/60 px-2 py-0.5 rounded uppercase tracking-wider">Tonight's Rescue Meals</span>
+                                        <span class="text-[10px] text-slate-400 font-medium">No added shopping</span>
+                                    </div>
+                                    
+                                    <div class="space-y-2">
+                                        <div class="bg-white p-2.5 rounded-lg border border-slate-100 shadow-sm flex justify-between items-center hover:border-green-300 cursor-pointer transition">
+                                            <div>
+                                                <h4 class="text-xs font-bold text-slate-800">One-Pan Garlic Chicken & Spinach</h4>
+                                                <p class="text-[9px] text-slate-400 mt-0.5">Uses chicken breast, fresh baby spinach, garlic</p>
+                                            </div>
+                                            <span class="text-[9px] font-semibold text-green-700 bg-green-50 px-1.5 py-0.5 rounded">95% Match</span>
+                                        </div>
+
+                                        <div class="bg-white p-2.5 rounded-lg border border-slate-100 shadow-sm flex justify-between items-center hover:border-green-300 cursor-pointer transition">
+                                            <div>
+                                                <h4 class="text-xs font-bold text-slate-800">Classic Avocado & Spinach Salad</h4>
+                                                <p class="text-[9px] text-slate-400 mt-0.5">Uses ripe avocados, spinach leaves, lemon juice</p>
+                                            </div>
+                                            <span class="text-[9px] font-semibold text-green-700 bg-green-50 px-1.5 py-0.5 rounded">100% Match</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button onclick="resetPrototype()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 rounded-xl text-xs transition duration-200">
+                                    Scan Another Receipt
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <!-- Mini Navigation Footer -->
+                        <div class="px-5 pt-3 border-t border-slate-100 flex justify-around text-slate-400">
+                            <div class="flex flex-col items-center gap-1 cursor-pointer text-green-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A4.89 4.89 0 0012 9.75c-1.39 0-2.63.58-3.5 1.51M9 3.5c0 .414-.336.75-.75.75H3.75a.75.75 0 01-.75-.75V3.5a.75.75 0 01.75-.75h4.5c.414 0 .75.336.75.75z" />
+                                </svg>
+                                <span class="text-[9px] font-medium">My Fridge</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-1 cursor-pointer hover:text-green-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                                </svg>
+                                <span class="text-[9px] font-medium">Recipes</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-1 cursor-pointer hover:text-green-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+                                </svg>
+                                <span class="text-[9px] font-medium">Savings</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Design Token Sheet & Implementation Specs -->
+            <div class="lg:col-span-7 space-y-8">
+                
+                <!-- Section 1: Interaction Architecture Documentation -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h2 class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center justify-between">
+                        <span>Design Token Reference System</span>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded font-mono">v1.1.0</span>
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                        <!-- Primary Palette -->
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Color System</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-100">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded bg-green-600"></div>
+                                        <span class="text-xs font-semibold">Primary Theme</span>
+                                    </div>
+                                    <span class="text-xs font-mono text-slate-500">#16A34A</span>
+                                </div>
+                                <div class="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-100">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded bg-orange-500"></div>
+                                        <span class="text-xs font-semibold">Decay / Alarm</span>
+                                    </div>
+                                    <span class="text-xs font-mono text-slate-500">#F97316</span>
+                                </div>
+                                <div class="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-100">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded bg-slate-900"></div>
+                                        <span class="text-xs font-semibold">Slate Primary</span>
+                                    </div>
+                                    <span class="text-xs font-mono text-slate-500">#0F172A</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Spacing and Sizing -->
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Shelf-life Decay Mapping Rules</h4>
+                            <div class="text-xs text-slate-600 space-y-2">
+                                <p class="leading-relaxed">
+                                    When receipts are processed, fresh food decays programmatically on the following default values:
+                                </p>
+                                <ul class="list-disc pl-4 space-y-1 text-slate-500">
+                                    <li>Fresh berries, cut greens: <span class="font-bold text-orange-600">3-4 days</span></li>
+                                    <li>Fresh poultry, meats: <span class="font-bold text-orange-600">3 days</span></li>
+                                    <li>Vegetables, root crops: <span class="font-bold text-green-700">7-14 days</span></li>
+                                    <li>Pantry dry staples: <span class="font-bold text-green-700">180 days</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Flow Details & Verification Mechanics -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 class="text-base font-bold text-slate-800 mb-3">Verification Mechanism Rules</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        To maintain high parent engagement and avoid the typical 90% abandonment of manual logs, PantryPick utilizes a streamlined, single-tap confirmation checklist.
+                    </p>
+                    
+                    <div class="border-l-4 border-green-500 bg-green-50/50 p-4 rounded-r-lg space-y-2 text-xs">
+                        <p class="font-semibold text-green-900">1. Instant OCR & NLP Mapping</p>
+                        <p class="text-green-700 leading-relaxed">
+                            Once raw item strings are captured (e.g., "ORGC SPNCH 10OZ"), NLP maps them to readable items ("Organic Spinach"), pre-tags estimated shelf life, and tags exact weight.
+                        </p>
+                        <p class="font-semibold text-green-900 pt-2">2. Single-Tap Pruning</p>
+                        <p class="text-green-700 leading-relaxed">
+                            Parents can quickly verify estimated expirations, delete false parses, and increment counts via simple rounded touch-targets (min 44px) without keyboard input.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Section 3: Tech Stack & Handoff Checklist -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 class="text-base font-bold text-slate-800 mb-3">Developer Implementation Blueprint</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-200 text-slate-400 font-semibold">
+                                    <th class="py-2">Component ID</th>
+                                    <th class="py-2">Target Action</th>
+                                    <th class="py-2">Technical Trigger</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-600">
+                                <tr>
+                                    <td class="py-3 font-mono text-green-700">btn-receipt-upload</td>
+                                    <td class="py-3">Starts native device image picker / files API</td>
+                                    <td class="py-3">Validates image file/PDF formats &lt; 15MB</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-mono text-green-700">verification-checklist</td>
+                                    <td class="py-3">Loads computed shelf-life values</td>
+                                    <td class="py-3">Applies dynamic status color badges (Warning/OK)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 font-mono text-green-700">zero-search-match</td>
+                                    <td class="py-3">Retrieves direct 3-ingredient recipes</td>
+                                    <td class="py-3">Calls LLM matching filtered on expired ingredients</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-white py-8 mt-16 px-8 text-center text-xs text-slate-400">
+        <p>&copy; 2026 PantryPick, Inc. All rights reserved. Strict ROSCA & California CARL Billing Compliance Active.</p>
+    </footer>
+
+    <!-- Prototype Logic Script -->
+    <script>
+        // Sample receipt data model
+        const parsedItems = [
+            { id: 1, name: "Fresh Baby Spinach", qty: 1, decay: "Expiring in 4 days", status: "critical", code: "ORGC SPNCH 10OZ" },
+            { id: 2, name: "Boneless Chicken Breast", qty: 1, decay: "Expiring in 3 days", status: "critical", code: "BST CHICKEN 1.8LB" },
+            { id: 3, name: "Ripe Avocados", qty: 3, decay: "Expiring in 5 days", status: "warning", code: "AVOCADOS HASS 3PK" },
+            { id: 4, name: "Organic Whole Milk", qty: 1, decay: "Expiring in 9 days", status: "safe", code: "ORGC MILK WHL 1GAL" },
+            { id: 5, name: "Fresh Garlic Bulb", qty: 2, decay: "Expiring in 21 days", status: "safe", code: "GARLIC BULB" },
+            { id: 6, name: "Sourdough Bread", qty: 1, decay: "Expiring in 5 days", status: "warning", code: "SRDGH BRD Sliced" }
+        ];
+
+        function startSimulatedParsing() {
+            // Hide upload screen
+            document.getElementById('screen-upload').classList.add('hidden');
+            // Show parsing screen
+            document.getElementById('screen-parsing').classList.remove('hidden');
+
+            // Simulate progress ticks
+            setTimeout(() => {
+                const step1 = document.getElementById('log-step-1');
+                step1.classList.remove('text-slate-400');
+                step1.classList.add('text-green-600', 'font-bold');
+            }, 800);
+
+            setTimeout(() => {
+                const step2 = document.getElementById('log-step-2');
+                step2.classList.remove('text-slate-400');
+                step2.classList.add('text-green-600', 'font-bold');
+            }, 1800);
+
+            setTimeout(() => {
+                const step3 = document.getElementById('log-step-3');
+                step3.classList.remove('text-slate-400');
+                step3.classList.add('text-green-600', 'font-bold');
+            }, 2800);
+
+            // Move to verification checklist
+            setTimeout(() => {
+                document.getElementById('screen-parsing').classList.add('hidden');
+                document.getElementById('screen-verify').classList.remove('hidden');
+                populateVerificationList();
+            }, 3800);
+        }
+
+        function populateVerificationList() {
+            const container = document.getElementById('verification-list');
+            container.innerHTML = '';
+
+            parsedItems.forEach((item, index) => {
+                // Determine decay badge style
+                let badgeClass = "text-green-700 bg-green-50";
+                if (item.status === 'critical') badgeClass = "text-red-700 bg-red-50";
+                else if (item.status === 'warning') badgeClass = "text-amber-700 bg-amber-50";
+
+                const row = document.createElement('div');
+                row.className = "flex items-center justify-between p-3 bg-slate-50 border border-slate-100 rounded-xl hover:border-slate-200 transition";
+                row.id = `item-row-${item.id}`;
+                row.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center justify-center w-5 h-5 rounded-md border border-slate-300 bg-white">
+                            <input type="checkbox" checked class="accent-green-600 w-3.5 h-3.5" id="checkbox-${item.id}" onchange="toggleItem(${item.id})">
+                        </div>
+                        <div>
+                            <span class="block text-xs font-bold text-slate-800" id="name-${item.id}">${item.name}</span>
+                            <span class="text-[9px] text-slate-400 font-mono block">${item.code}</span>
+                            <span class="inline-block text-[8px] font-bold uppercase tracking-wider ${badgeClass} px-1.5 py-0.5 rounded mt-1">${item.decay}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button class="w-6 h-6 rounded-full bg-white border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-600 active:scale-95" onclick="adjustQty(${item.id}, -1)">-</button>
+                        <span class="text-xs font-bold text-slate-800 px-1" id="qty-${item.id}">${item.qty}</span>
+                        <button class="w-6 h-6 rounded-full bg-white border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-600 active:scale-95" onclick="adjustQty(${item.id}, 1)">+</button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function adjustQty(id, delta) {
+            const qtySpan = document.getElementById(`qty-${id}`);
+            let current = parseInt(qtySpan.textContent);
+            current += delta;
+            if (current < 1) current = 1;
+            qtySpan.textContent = current;
+        }
+
+        function toggleItem(id) {
+            const label = document.getElementById(`name-${id}`);
+            const checkbox = document.getElementById(`checkbox-${id}`);
+            if (!checkbox.checked) {
+                label.classList.add('line-through', 'text-slate-400');
+            } else {
+                label.classList.remove('line-through', 'text-slate-400');
+            }
+        }
+
+        function confirmAndFinish() {
+            document.getElementById('screen-verify').classList.add('hidden');
+            document.getElementById('screen-success').classList.remove('hidden');
+        }
+
+        function resetPrototype() {
+            // Restore logging steps styling
+            document.getElementById('log-step-1').className = "flex items-center gap-2 text-slate-400 transition-colors";
+            document.getElementById('log-step-2').className = "flex items-center gap-2 text-slate-400 transition-colors";
+            document.getElementById('log-step-3').className = "flex items-center gap-2 text-slate-400 transition-colors";
+
+            // Switch back to upload screen
+            document.getElementById('screen-success').classList.add('hidden');
+            document.getElementById('screen-upload').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
